@@ -11,9 +11,9 @@ duration_repeat = 8 # repeat count
 # 1. GENERATE TRAINING SIGNAL
 # -----------------------------
 
-t_p = np.linspace(0, 0.1, int(fs * 0.1))
-p = np.sin(2 * np.pi * (1000 * t_p + (19000 / (2 * 0.1)) * t_p**2))
-p = p / np.max(np.abs(p))   # normalize to [-1,1]
+np.random.seed(42)
+p = np.random.randn(int(fs * 0.1))
+p = p / np.max(np.abs(p))
 
 # -----------------------------
 # 2. REPEAT SIGNAL (IMPORTANT)
