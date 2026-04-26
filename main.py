@@ -37,7 +37,6 @@ print("Recording finished")
 
 correlation = np.correlate(rx, p, mode='valid')
 start_idx = np.argmax(np.abs(correlation)) #Signal first appears at this index in the recording.
-rx_block = rx[start_idx : start_idx + len(p)] #Extract the segment of the recording that corresponds to the length of the training signal p.
 
 print("Signal detected at sample:", start_idx)
 
@@ -46,15 +45,17 @@ if start_idx + len(p) > len(rx):
     print("Recording is too short")
     exit()
 
+rx_block = rx[start_idx : start_idx + len(p)] #Extract the segment of the recording that corresponds to the length of the training signal p.
+
 #Channel estimation using FFT to compute the CIR from the transmitted signal and the received block.
 
 X = np.fft.fft(p) #FFT of the transmitted signal (reference signal)
 Y = np.fft.fft(rx_block) #FFT of the received block that contains the transmitted signal and its echoes.
 
-H = Y / (X + 1e-8) #Estimate the channel frequency response by dividing the FFT of the received signal by the FFT of the transmitted signal.
+epsilon = 1e-6 * np.max(np.abs(X)**2)
+H = (np.conj(X) * Y) / (np.abs(X)**2 + epsilon) #Estimate the channel frequency response by dividing the FFT of the received signal by the FFT of the transmitted signal.
 h = np.fft.ifft(H) #Compute the channel impulse response (CIR)
 
-h = np.real(h)
 mag = np.abs(h) #Magnitude of the CIR, which will be used to detect peaks corresponding to echoes.
 
 #Find the max peaks in CIR  
