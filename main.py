@@ -3,6 +3,7 @@ This code records audio from the microphone,
 detects the transmitted signal, estimates the channel impulse response (CIR), 
 and calculates the distance to a reflector based on the detected peaks in the CIR.
 Run sound_generation.py 1st to create training signal, save it as p.npy.
+created by: Alia Ahmad, Filzah Shamsudin
 
 """
 import numpy as np
