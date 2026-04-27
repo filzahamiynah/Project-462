@@ -2,7 +2,7 @@
 This code records audio from the microphone, 
 detects the transmitted signal, estimates the channel impulse response (CIR), 
 and calculates the distance to a reflector based on the detected peaks in the CIR.
-Must run sound_generation.py first to create the training signal and save it as p.npy.
+Run sound_generation.py 1st to create training signal, save it as p.npy.
 
 """
 import numpy as np
@@ -67,7 +67,7 @@ if len(peaks) < 2:
 
 #pick top 2 peaks
 top_peaks = peaks[np.argsort(mag[peaks])[-2:]] 
-top_peaks = np.sort(top_peaks) #Sort the top peaks to ensure they are in the correct order (first peak is the direct path, second peak is the echo).
+top_peaks = np.sort(top_peaks) #Sort the top peaks to ensure they are in the correct order (1st peak is the direct path, 2nd peak is the echo).
 
 print("Detected peaks at:", top_peaks)
 
